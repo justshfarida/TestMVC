@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ResponseModel<List<AuthorModel>>
+
+<style>
+    .user-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .user-table th, .user-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .user-table th {
+            background-color: #f2f2f2;
+        }
+
+        .user-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+</style>
+
+@if (Model != null && Model.Data != null && Model.Data.Any())
+{
+    <h2>User Table</h2>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>Author ID</th>
+                <th>Author Name</th>
+                <th>Author Surname</th>
+                <th>Birth Year</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var author in Model.Data)
+            {
+                <tr>
+                    <td>@author.Id</td>
+                    <td>@author.Name</td>
+                    <td>@author.Surname</td>
+                    <td>@author.BirthYear</td>
+                    <td>
+                        <button onclick="location.href='@Url.Action("EditAuthor", "Author", new { id = author.Id })'">Edit</button>
+                        <button onclick="location.href='@Url.Action("DeleteAuthor", "Author", new { id = author.Id })'">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div style="margin-top: 20px;">
+        <button onclick="location.href='@Url.Action("AddAuthor", "Author")'">Add Author</button>
+    </div>
+}
+else
+{
+    <p>Failed to retrieve user data.</p>
+}
